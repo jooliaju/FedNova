@@ -97,10 +97,10 @@ parser.add_argument('--optimizer',
                     default='local', 
                     type=str, 
                     help='optimizer name')
-parser.add_argument('--initmethod',
-                    default='tcp://h0:22000',
-                    type=str,
-                    help='init method')
+# parser.add_argument('--initmethod',
+#                     default='tcp://h0:22000',
+#                     type=str,
+#                     help='init method')
 parser.add_argument('--mu', 
                     default=0, 
                     type=float, 
@@ -324,3 +324,6 @@ if __name__ == "__main__":
     size = args.size
     print(rank)
     init_processes(rank, size, run)
+
+
+

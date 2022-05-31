@@ -23,7 +23,7 @@ import torch.backends.cudnn as cudnn
 import torchvision.models as IMG_models
 
 from models import *
-from models import LogisticRegression
+# from models import LogisticRegression
 
 # logging.basicConfig(level=logging.INFO)
 
@@ -177,7 +177,8 @@ def partition_dataset(rank, size, args):
                                             download=True, 
                                             transform=transform_train)
     
-    partition_sizes = [1.0 / size for _ in range(size)]
+    partition_sizes = [.05 / size for _ in range(size)]
+    
     partition = DataPartitioner(trainset, partition_sizes, isNonIID=args.NIID, alpha=args.alpha)
     ratio = partition.ratio
     partition = partition.use(rank)
@@ -205,7 +206,10 @@ def partition_dataset(rank, size, args):
 
 def select_model(num_class, args):
     if args.model == 'VGG':
+
+        print('yay this is returning a vgg11 model')
         model = vgg11()
+
 
     # You can add more models here
     return model

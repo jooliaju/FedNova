@@ -93,7 +93,8 @@ class FedNova(Optimizer):
             closure (callable, optional): A closure that reevaluates the model
                 and returns the loss.
         """
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        # device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = 'cpu'
 
         loss = None
         if closure is not None:
@@ -168,11 +169,12 @@ class FedNova(Optimizer):
     def average(self, weight=0, tau_eff=0):
         if weight == 0:
             weight = self.ratio
-        if tau_eff == 0:
+        if tau_eff == 0: 
+            tau_eff==0
             if self.mu != 0:
-                tau_eff_cuda = torch.tensor(self.local_steps*self.ratio).cuda()
+                tau_eff_cuda = torch.tensor(self.local_steps*self.ratio) #.cpu
             else:
-                tau_eff_cuda = torch.tensor(self.local_normalizing_vec*self.ratio).cuda()
+                tau_eff_cuda = torch.tensor(self.local_normalizing_vec*self.ratio)#.cpu
             dist.all_reduce(tau_eff_cuda, op=dist.ReduceOp.SUM)
             tau_eff = tau_eff_cuda.item()
 
