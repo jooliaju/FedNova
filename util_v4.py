@@ -4,10 +4,10 @@ import time
 import argparse
 # import logging
 
-from mpi4py import MPI
+# from mpi4py import MPI
 from math import ceil
 from random import Random
-import networkx as nx
+# import networkx as nx
 
 import torch
 import torch.distributed as dist

@@ -1,5 +1,5 @@
 import torch
-import torch.distributed as dist
+# import torch.distributed as dist
 from torch.optim.optimizer import Optimizer, required
 from comm_helpers import communicate, flatten_tensors, unflatten_tensors
 import threading
@@ -172,10 +172,10 @@ class FedNova(Optimizer):
         if tau_eff == 0: 
             tau_eff==0
             if self.mu != 0:
-                tau_eff_cuda = torch.tensor(self.local_steps*self.ratio) #.cpu
+                tau_eff_cuda = torch.tensor(self.local_steps*self.ratio)  #.cpu
             else:
-                tau_eff_cuda = torch.tensor(self.local_normalizing_vec*self.ratio)#.cpu
-            dist.all_reduce(tau_eff_cuda, op=dist.ReduceOp.SUM)
+                tau_eff_cuda = torch.tensor(self.local_normalizing_vec*self.ratio)  #.cpu
+            # dist.all_reduce(tau_eff_cuda, op=dist.ReduceOp.SUM)
             tau_eff = tau_eff_cuda.item()
 
         param_list = []
@@ -183,8 +183,9 @@ class FedNova(Optimizer):
             for p in group['params']:
                 param_state = self.state[p]
                 scale = tau_eff/self.local_normalizing_vec
-                param_state['cum_grad'].mul_(weight*scale)
-                param_list.append(param_state['cum_grad'])
+                if 'cum_grad' is in param_state:
+                    param_state['cum_grad'].mul_(weight*scale)
+                    param_list.append(param_state['cum_grad'])
         
         communicate(param_list, dist.all_reduce)
 
