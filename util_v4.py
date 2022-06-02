@@ -2,6 +2,8 @@ import os
 import numpy as np
 import time
 import argparse
+import sys
+
 # import logging
 
 # from mpi4py import MPI
@@ -177,10 +179,18 @@ def partition_dataset(rank, size, args):
                                             download=True, 
                                             transform=transform_train)
     
-    partition_sizes = [.05 / size for _ in range(size)]
+    partition_sizes = [.05 / size for _ in range(size)] #temporary space
     
     partition = DataPartitioner(trainset, partition_sizes, isNonIID=args.NIID, alpha=args.alpha)
     ratio = partition.ratio
+    
+    print('RATIOOOO: '+ str(ratio))
+    with open('check', 'w+') as f:
+        # sys.stdout = f # Change the standard output to the file we created.
+        print('yooooooo')
+        
+
+
     partition = partition.use(rank)
     train_loader = torch.utils.data.DataLoader(partition, 
                                             batch_size=args.bs, 
