@@ -179,7 +179,7 @@ class FedNova(Optimizer):
             # dist.all_reduce(tau_eff_cuda, op=dist.ReduceOp.SUM)
             tau_eff = tau_eff_cuda.item()
             
-        param_list = []
+        param_list = [] 
         for group in self.param_groups:
             for p in group['params']:
                 param_state = self.state[p]
