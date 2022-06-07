@@ -183,13 +183,6 @@ def partition_dataset(rank, size, args):
     
     partition = DataPartitioner(trainset, partition_sizes, isNonIID=args.NIID, alpha=args.alpha)
     ratio = partition.ratio
-    
-    print('RATIOOOO: '+ str(ratio))
-    with open('check', 'w+') as f:
-        # sys.stdout = f # Change the standard output to the file we created.
-        print('yooooooo')
-        
-
 
     partition = partition.use(rank)
     train_loader = torch.utils.data.DataLoader(partition, 
@@ -217,7 +210,7 @@ def partition_dataset(rank, size, args):
 def select_model(num_class, args):
     if args.model == 'VGG':
 
-        print('yay this is returning a vgg11 model')
+        #returning a vgg11 model
         model = vgg11()
 
 
