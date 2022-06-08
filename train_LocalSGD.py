@@ -205,10 +205,11 @@ def run(rank, size):
         if test_acc > best_test_accuracy:
             best_test_accuracy = test_acc
         
-        # record metrics
+        #### record metrics ####
+        
         logging.info("Round {} test accuracy {:.3f} time {:.3f}".format(rnd, test_acc, comm_time))
         with open(args.out_fname, '+a') as f:
-            print('{ep},{itr},{filler},{filler},'
+            print(' ayo metrics {ep},{itr},{filler},{filler},'
                   '{filler},{filler},'
                   '{val:.4f},{time:.4f}'
                   .format(ep=rnd, itr=-1,

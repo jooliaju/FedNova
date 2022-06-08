@@ -180,7 +180,7 @@ def partition_dataset(rank, size, args):
                                             transform=transform_train)
     
     partition_sizes = [.05 / size for _ in range(size)] #temporary space
-    
+
     partition = DataPartitioner(trainset, partition_sizes, isNonIID=args.NIID, alpha=args.alpha)
     ratio = partition.ratio
 
@@ -189,7 +189,7 @@ def partition_dataset(rank, size, args):
                                             batch_size=args.bs, 
                                             shuffle=True, 
                                             pin_memory=True)
-
+    
     print('==> load test data')
     transform_test = transforms.Compose([
         transforms.ToTensor(),
@@ -301,3 +301,6 @@ class Meter(object):
                 return str(self.ptag) + \
                        str(': {dm.val:.3f} ({dm.avg:.3f} +- {dm.std:.3f})'
                            .format(dm=self))
+                       
+                       
+             
